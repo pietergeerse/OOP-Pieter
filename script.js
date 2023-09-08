@@ -12,12 +12,9 @@
 /* ********************************************* */
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
-var xPosities;
-var yPosities;
-var speedX;
-var speedY;
+var mensen
 const BREEDTE = 20;
-var i;
+
 
 
 /* ********************************************* */
@@ -33,12 +30,31 @@ function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 
-  // initialiseer waarden
-  speedX = [random(-5, 5),random(-5, 5),random(-5, 5),random(-5, 5),random(-5, 5)];      // random waarde tussen -5 en 5
-  speedY = [random(-5, 5),random(-5, 5),random(-5, 5),random(-5, 5),random(-5, 5)];      // 👆
-  xPosities = [random(20,1260), random(20,1260), random(20,1260), random(20,1260), random(20,1260)];
-  xPosities = [random(20,700), random(20,700), random(20,700), random(20,700), random(20,700)];
+  mensen [
+    {x: random(20,1260),
+      y: random(20,700),
+      speedX : random(-5, 5),
+      speedY : random(-5, 5)},
+    {x: random(20,1260),
+      y: random(20,700),
+      speedX : random(-5, 5),
+      speedY : random(-5, 5)},
+    {x: random(20,1260),
+      y: random(20,700),
+      speedX : random(-5, 5),
+      speedY : random(-5, 5)},
+    {x: random(20,1260),
+     y: random(20,700),
+      speedX : random(-5, 5),
+      speedY : random(-5, 5)},
+    {x: random(20,1260),
+      y: random(20,700),
+      speedX : random(-5, 5),
+     speedY : random(-5, 5)}
+  ]
+
 }
+
 
 /**
  * draw
@@ -50,25 +66,19 @@ function draw() {
   background(0, 0, 0);
 
   // teken
-  for (var i = 0; i < xPosities.length; i++){
-  noStroke;
-  fill(255, 255, 255);
-  rect(xPosities[i], yPosities[i], BREEDTE, BREEDTE);
+  for (var i = 0; i < mensen.length; i++) {
+    rect(mensen[i].x, mensen[i].y, BREEDTE, BREEDTE);
+    //beweging
+    xPosities[i] = xPosities[i] + speedX[i];
+    yPosities[i] = yPosities[i] + speedY[i];
+    //stuiter
+    if (xPosities[i] <= 0 || xPosities[i] + BREEDTE >= width) {
+      speedX[i] = speedX[i] * -1;
+    }
   
-
-  // update positie
+    if (yPosities[i] <= 0 || yPosities[i] + BREEDTE >= height) {
+      speedY[i] = speedY[i] * -1;
+    }
+  }
   
-  xPosities[i] = xPosities[i] + speedX[i];
-  yPosities[i] = yPosities[i] + speedY[i];
-
-  // stuiter evt. tegen de kanten
-  if (xPosities[i] <= 0 || xPosities[i] + BREEDTE >= width) {
-    speedX[i] = speedX[i] * -1;
-  }
-
-  if (yPosities[i] <= 0 || yPosities[i] + BREEDTE >= height) {
-    speedY[i] = speedY[i] * -1;
-  }
- }
-
 }
